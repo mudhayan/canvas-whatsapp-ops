@@ -1,15 +1,24 @@
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Node 18+ has native fetch, no polyfills needed
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from dist folder in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'dist')));
+}
 
 // Store API key (in production, use environment variables)
 let openaiApiKey = null;
@@ -422,9 +431,16 @@ Return ONLY valid JSON. Each recommendation must be fully compliant, complete, a
   }
 });
 
+// Serve frontend for all other routes in production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  });
+}
+
 app.listen(PORT, () => {
-  console.log(`🚀 OpenAI proxy server running on http://localhost:${PORT}`);
-  console.log(`📍 Health check: http://localhost:${PORT}/health`);
-  console.log(`🤖 AI Review endpoint: http://localhost:${PORT}/api/ai-review`);
-  console.log(`🔑 Set API key: POST http://localhost:${PORT}/api/set-key`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📍 Health check: /health`);
+  console.log(`🤖 AI Review endpoint: /api/ai-review`);
+  console.log(`🔑 Set API key: POST /api/set-key`);
 });
