@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.twilio.com)",
+      "WebFetch(domain:help.twilio.com)",
+      "Bash(brew install:*)",
+      "Bash(textutil:*)",
+      "Bash(/opt/homebrew/bin/pdftotext \"/Users/mudhayananondh/Downloads/Forbidden Categories.pdf\" -)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(nvm list:*)",
+      "Bash(nvm use:*)",
+      "Bash(nvm alias:*)",
+      "WebFetch(domain:dealercx.com)",
+      "Bash(lsof -ti:5173)",
+      "Bash(lsof -ti:3001)",
+      "Bash(twilio --version)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git config *)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)"
+    ]
+  }
+}
